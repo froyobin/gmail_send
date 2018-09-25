@@ -84,20 +84,25 @@ def main():
     tenants = list()
     tenants.append(TenantsInfo("Yan Huang",'29','600'))
     tenants.append(TenantsInfo("ZeHang chen", '21', '610'))
-    tenants.append(TenantsInfo("Unknwon", '29', '600'))
-
+    tenants.append(TenantsInfo("Unknwon", '25', '600'))
+    #we have the variable today to ensure we only send one email.
+    today = "0"
     while True:
         now = datetime.datetime.now()
-        print (now.day)
-        for each in tenants:
-            if each.getDate() == now.day:
-                message = u'Hi %s,\n\n 记得及时交房租AUD %s,谢谢.\n\n\nregards,\nJoyce'%(each.getName(),each.getAmount())
-                title = u'记得在%s号之前交房租AUD %s,谢谢'%(each.getDate(), each.getAmount())
+        if str(now.day) == today:
+            print ("same day.")
+            continue
+        else:
+            for each in tenants:
+                if each.getDate() == str(now.day):
+                    message = u'Hi %s,\n\n 记得及时交房租AUD %s,谢谢.\n\n\nRegards,\nJoyce&Bin'%(each.getName(),each.getAmount())
+                    title = u'Hello, 记得在%s号之前交房租AUD %s,谢谢'%(each.getDate(), each.getAmount())
 
-                thisemail = Email()
-                email = thisemail.create_message("joyce", "froyo.bin@gmail.com", title, message)
-                # Send the Email
-                thisemail.send_message(email)
+                    thisemail = Email()
+                    email = thisemail.create_message("joyce", "froyo.bin@gmail.com", title, message)
+                    # Send the Email
+                    thisemail.send_message(email)
+            today = str(now.day)
         time.sleep(3600*6)
 
 
